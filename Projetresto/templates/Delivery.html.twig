@@ -1,0 +1,113 @@
+
+
+{% extends "base.html.twig"%}
+{% block title %} Livraison {%endblock%}
+{% block container %}
+<div class="container mt-5">
+      <div class="row tm-content-row">
+        <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6 tm-block-col">
+          <div class="tm-bg-primary-dark tm-block tm-block-products">
+          <form method="post" action="{{ path ('SEARCH')}}">
+          <input type="text" name="search" placeholder="Search"><input type="submit" value="Search" class="btn-light">
+          </form>
+
+            <div class="tm-product-table-container">
+              <table class="table table-hover tm-table-small tm-product-table">
+                <thead>
+                  <tr>
+                 
+                    <th scope="col">LIVREUR</th>
+                    <th scope="col">FRAIS LIVRAISON</th>
+                    <th scope="col">ID COMMANDE</th>
+                    <th scope="col">TOTALE</th>
+                    <th scope="col">&nbsp;</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr {% for l in livraisons %}>
+                    {% if (l.tot < 100) %}
+                    <td>{{(l.idlivreur)}}</td>
+                    <td>{{l.fraisdelivraison}}</td>
+                    <td>{{l.idCommande}}</td>
+                    <td>{{l.tot + l.fraisdelivraison}} </td>
+                    <td></td>
+                    {% else %}
+                    <td>{{(l.idlivreur)}}</td>
+                    <td>0</td>
+                    <td>{{l.idCommande}}</td>
+                    <td>{{l.tot}} </td>
+                    <td></td>
+                    {% endif %}
+                    
+                    <td>
+                      <a href="{{ path('Deletel',{'id':l.idlivraison}) }}">
+                      <i class="far fa-trash-alt tm-product-delete-icon" style='font-size:20px;color:red'></i>
+                    </a>
+                    </td>
+                    <td>
+                    <a href="{{ path('edit',{'id':l.idlivraison}) }}">
+ 
+                  <i class="fas fa-edit" style='font-size:20px;color:yellow'></i>
+                    </a>
+                    </td>
+                  </tr {% endfor %}>
+                  
+                </tbody>
+              </table>
+            </div>
+            <!-- table container -->
+            <a
+              href={{ path ('addLiv')}}
+              class="btn btn-primary btn-block text-uppercase mb-3">Add new Delivery</a>
+
+            
+          </div>
+        </div>
+      
+        <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6 tm-block-col">
+          <div class="tm-bg-primary-dark tm-block tm-block-product-categories">
+            <h2 class="tm-block-title">Livreurs</h2>
+            <div class="tm-product-table-container">
+              <table class="table tm-table-small tm-product-table">
+                
+                  <thead>
+                  <tr>
+                 
+                    <th scope="col">NOM LIVREUR</th>
+                    <th scope="col">PRENOM LIVREUR</th>
+                    <th scope="col">TEL LIVREUR</th>
+                    <th scope="col">&nbsp;</th>
+                  </tr>
+                </thead>
+                <tbody>
+              <tr {% for a in livreurs %}>
+                    
+                    <td class="tm-product-name">{{a.nomlivreur}}</td>
+                     <td class="tm-product-name">{{a.prenomlivreur}}</td>
+                      <td class="tm-product-name">{{a. telLivreur}}</td>
+                      <td>
+                      <a href="{{ path('Deleteliv',{'id':a.idlivreur}) }}">
+                      <i class="far fa-trash-alt tm-product-delete-icon" style='font-size:20px;color:red'></i>
+                    </a>
+
+                    <a href="{{ path('editl',{'id':a.idlivreur}) }}">
+                      <i class="fas fa-edit" style='font-size:20px;color:yellow'></i>
+                    </a>
+                    </td>
+                       
+                    
+                  </tr {% endfor %}>
+                </tbody>
+              </table>
+            </div>
+            <!-- table container -->
+            <a
+              href={{ path ('addlivr')}}
+              class="btn btn-primary btn-block text-uppercase mb-3">Add new Livreur</a>
+
+            
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endblock %}
